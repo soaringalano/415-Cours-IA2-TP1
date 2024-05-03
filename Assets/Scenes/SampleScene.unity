@@ -758,7 +758,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 2000
   m_Drag: 0
-  m_AngularDrag: 0.001
+  m_AngularDrag: 0.01
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -813,11 +813,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be6f16c3068313f48a5af7f955c70fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSteerAngle: 30
   maxMotorTorque: 405
-  maxBrakeTorque: 100
-  roadCondition: 70
-  trafficCondition: 40
+  maxBrakeTorque: 200
+  roadCondition: 100
+  trafficCondition: 0
   frontLeftWheel: {fileID: 2043535557}
   frontRightWheel: {fileID: 860836229}
   rearLeftWheel: {fileID: 87169521}

@@ -6,7 +6,7 @@ using FLS.Rules;
 
 public class CarController : MonoBehaviour
 {
-    public float maxSteerAngle;
+    //public float maxSteerAngle;
 
     public float maxMotorTorque;
 
@@ -19,6 +19,10 @@ public class CarController : MonoBehaviour
     public float trafficCondition;
 
     public WheelCollider frontLeftWheel, frontRightWheel, rearLeftWheel, rearRightWheel;
+
+    float runningTime = 0;
+
+    float travalDistance = 0;
 
     void Awake()
     {
@@ -55,6 +59,14 @@ public class CarController : MonoBehaviour
 
     void MoveForward()
     {
+        if(runningTime == 0)
+        {
+            runningTime = Time.time;
+        }
+        else
+        {
+            travalDistance = Time.time - runningTime;
+        }
         float wheelTorque = FLSTorqueHelper.CalculateForwardMotorTorque(maxMotorTorque, roadCondition, trafficCondition);
         frontLeftWheel.motorTorque = wheelTorque;
         frontRightWheel.motorTorque = wheelTorque;
@@ -95,8 +107,8 @@ public class CarController : MonoBehaviour
 
     void Brake()
     {
-        float brakeTorque = FLSTorqueHelper.CalculateBrakeTorque(maxBrakeTorque, roadCondition, trafficCondition);
-        Debug.Log("Brake torque : " + brakeTorque);
+         float brakeTorque = FLSTorqueHelper.CalculateBrakeTorque(maxMotorTorque, maxBrakeTorque, roadCondition, trafficCondition);
+        //Debug.Log("Brake torque : " + brakeTorque);
         frontLeftWheel.brakeTorque = brakeTorque;
         frontRightWheel.brakeTorque = brakeTorque;
         rearLeftWheel.brakeTorque = brakeTorque;

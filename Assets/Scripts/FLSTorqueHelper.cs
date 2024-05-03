@@ -27,9 +27,9 @@ public class FLSTorqueHelper
 
         /// ¨¦tat de la rue 
         var roadCondition = new LinguisticVariable("roadCondition");
-        var badCondition = roadCondition.MembershipFunctions.AddTrapezoid("dryRoad", 0, 0, 20, 40);
-        var midCondition = roadCondition.MembershipFunctions.AddTriangle("humidRoad", 30, 50, 70);
-        var goodCondition = roadCondition.MembershipFunctions.AddTrapezoid("slipperyRoad", 60, 80, 100, 100);
+        var badCondition = roadCondition.MembershipFunctions.AddTrapezoid("Montreal", 0, 0, 20, 40);
+        var midCondition = roadCondition.MembershipFunctions.AddTriangle("Toronto", 30, 50, 70);
+        var goodCondition = roadCondition.MembershipFunctions.AddTrapezoid("Vancouveur", 60, 80, 100, 100);
 
 
         /// Cons¨¦quents (Outputs) : variables linguistiques & Fuzzification
@@ -40,9 +40,9 @@ public class FLSTorqueHelper
 
         /// ¨¦tat du traffic
         var trafficCondition = new LinguisticVariable("trafficCondition");
-        var lowTraffic = trafficCondition.MembershipFunctions.AddTrapezoid("lowTraffic", 0, 0, 20, 40);
-        var mediumTraffic = trafficCondition.MembershipFunctions.AddTriangle("mediumTraffic", 30, 50, 70);
-        var highTraffic = trafficCondition.MembershipFunctions.AddTrapezoid("highTraffic", 60, 80, 100, 100);
+        var lowTraffic = trafficCondition.MembershipFunctions.AddTrapezoid("RivStLaurent", 0, 0, 20, 40);
+        var mediumTraffic = trafficCondition.MembershipFunctions.AddTriangle("15hwy", 30, 50, 70);
+        var highTraffic = trafficCondition.MembershipFunctions.AddTrapezoid("40hwy", 60, 80, 100, 100);
 
         /// Base de regles: d¨¦finition des regles
         var accRule1 = Rule.If(motorTorque.Is(lowAcceleration)).Then(brakeTorque.Is(lowBrake));
@@ -75,19 +75,24 @@ public class FLSTorqueHelper
 
     }
 
-    public static float CalculateBrakeTorque(float motorTorque, float roadCondition, float trafficCondition)
+    public static float CalculateBrakeTorque(float maxMotorTorque, float brakeTorque, float roadCondition, float trafficCondition)
     {
-        return (float)brakeFuzzyEngine.Defuzzify(new {motorTorque = (double)motorTorque, roadCondition = (double)roadCondition, trafficCondition = (double)trafficCondition});
+        float ret = 4 * (float)brakeFuzzyEngine.Defuzzify(new {motorTorque = (double)maxMotorTorque, brakeTorque = (double)brakeTorque, roadCondition = (double)roadCondition, trafficCondition = (double)trafficCondition});
+        Debug.Log("Brake torque : " + ret);
+        return ret;
     }
 
     public static float CalculateForwardMotorTorque(float motorTorque, float roadCondition, float trafficCondition)
     {
-        return (float)forwardMotorFuzzyEngine.Defuzzify(new { motorTorque = (double)motorTorque, roadCondition = (double)roadCondition, trafficCondition = (double)trafficCondition });
+        float ret = 4 * (float)forwardMotorFuzzyEngine.Defuzzify(new { motorTorque = (double)motorTorque, roadCondition = (double)roadCondition, trafficCondition = (double)trafficCondition });
+        Debug.Log("Forward motor torque : " + ret);
+        return ret;
     }
 
     public static float CalculateBackwardMotorTorque(float maxMotorTorque, float roadCondition, float trafficCondition)
     {
-
-        return CalculateForwardMotorTorque(maxMotorTorque, roadCondition, trafficCondition) / 2;
+        float ret = CalculateForwardMotorTorque(maxMotorTorque, roadCondition, trafficCondition) / 2;
+        Debug.Log("Backward motor torque : " + ret);
+        return ret;
     }
 }
