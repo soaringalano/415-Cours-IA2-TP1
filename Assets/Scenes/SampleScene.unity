@@ -742,9 +742,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5645700414978238934, guid: 273dc1cc8a817584ba880ad7eabfbe71, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1654976895}
-    - targetCorrespondingSourceObject: {fileID: 5645700414978238934, guid: 273dc1cc8a817584ba880ad7eabfbe71, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1654976897}
   m_SourcePrefab: {fileID: 100100000, guid: 273dc1cc8a817584ba880ad7eabfbe71, type: 3}
 --- !u!1 &1654976890 stripped
 GameObject:
@@ -818,25 +815,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSteerAngle: 30
   maxMotorTorque: 405
-  wheelTorque: 50
-  roadCondition: 20
-  trafficCondition: 0
+  maxBrakeTorque: 100
+  roadCondition: 70
+  trafficCondition: 40
   frontLeftWheel: {fileID: 2043535557}
   frontRightWheel: {fileID: 860836229}
   rearLeftWheel: {fileID: 87169521}
   rearRightWheel: {fileID: 1592161645}
---- !u!114 &1654976897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654976890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a90900cc92cd1184087e76e7dc94a14a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1769171892
 GameObject:
   m_ObjectHideFlags: 0

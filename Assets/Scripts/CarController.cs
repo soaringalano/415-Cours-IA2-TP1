@@ -10,13 +10,7 @@ public class CarController : MonoBehaviour
 
     public float maxMotorTorque;
 
-    public float minMotorTorque;
-
     public float maxBrakeTorque;
-
-    public float accelerationDuration = 0;
-
-    public float brakeDuration = 0;
 
     // 0 means very slippery 100 means very dry
     public float roadCondition;
@@ -26,9 +20,9 @@ public class CarController : MonoBehaviour
 
     public WheelCollider frontLeftWheel, frontRightWheel, rearLeftWheel, rearRightWheel;
 
-    void Start()
+    void Awake()
     {
-        
+        FLSTorqueHelper.initializeFLS();
     }
 
     void FixedUpdate()
@@ -61,7 +55,7 @@ public class CarController : MonoBehaviour
 
     void MoveForward()
     {
-        float wheelTorque = FLSTorqueHelper.Instance.CalculateForwardMotorTorque(maxMotorTorque, minMotorTorque, roadCondition, trafficCondition, accelerationDuration);
+        float wheelTorque = FLSTorqueHelper.CalculateForwardMotorTorque(maxMotorTorque, roadCondition, trafficCondition);
         frontLeftWheel.motorTorque = wheelTorque;
         frontRightWheel.motorTorque = wheelTorque;
         rearLeftWheel.motorTorque = wheelTorque;
@@ -75,7 +69,7 @@ public class CarController : MonoBehaviour
 
     void MoveBackward()
     {
-        float wheelTorque = FLSTorqueHelper.Instance.CalculateBackwardMotorTorque(maxMotorTorque, minMotorTorque, roadCondition, trafficCondition, accelerationDuration);
+        float wheelTorque = FLSTorqueHelper.CalculateBackwardMotorTorque(maxMotorTorque, roadCondition, trafficCondition);
         frontLeftWheel.motorTorque = -wheelTorque;
         frontRightWheel.motorTorque = -wheelTorque;
         rearLeftWheel.motorTorque = -wheelTorque;
@@ -101,7 +95,7 @@ public class CarController : MonoBehaviour
 
     void Brake()
     {
-        float brakeTorque = FLSTorqueHelper.Instance.CalculateBrakeTorque(maxBrakeTorque, brakeDuration);
+        float brakeTorque = FLSTorqueHelper.CalculateBrakeTorque(maxBrakeTorque, roadCondition, trafficCondition);
         Debug.Log("Brake torque : " + brakeTorque);
         frontLeftWheel.brakeTorque = brakeTorque;
         frontRightWheel.brakeTorque = brakeTorque;
